@@ -1,8 +1,15 @@
 from contextlib import asynccontextmanager
 
-from fastapi import FastAPI
+from fastapi import FastAPI, Request
+from fastapi.responses import JSONResponse
 
+from backend.app.api.routes.documents import router as documents_router
 from backend.app.config import settings
+from backend.app.core.exceptions import (
+    DocumentNotFoundError,
+    DocumentValidationError,
+    PdfExtractionError,
+)
 
 
 @asynccontextmanager
@@ -19,6 +26,41 @@ app = FastAPI(
     lifespan=lifespan,
     debug=settings.debug,
 )
+
+app.include_router(documents_router)
+
+
+@app.exception_handler(DocumentValidationError)
+async def document_validation_exception_handler(
+    _request: Request,
+    exc: DocumentValidationError,
+) -> JSONResponse:
+    return JSONResponse(
+        status_code=exc.status_code,
+        content={"detail": exc.message},
+    )
+
+
+@app.exception_handler(DocumentNotFoundError)
+async def document_not_found_exception_handler(
+    _request: Request,
+    exc: DocumentNotFoundError,
+) -> JSONResponse:
+    return JSONResponse(
+        status_code=exc.status_code,
+        content={"detail": exc.message},
+    )
+
+
+@app.exception_handler(PdfExtractionError)
+async def pdf_extraction_exception_handler(
+    _request: Request,
+    exc: PdfExtractionError,
+) -> JSONResponse:
+    return JSONResponse(
+        status_code=exc.status_code,
+        content={"detail": exc.message},
+    )
 
 
 @app.get("/health", tags=["Health"])
