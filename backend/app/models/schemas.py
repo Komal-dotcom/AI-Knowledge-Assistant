@@ -30,3 +30,14 @@ class ExtractDocumentResponse(BaseModel):
 
 class ErrorResponse(BaseModel):
     detail: str
+
+class QuestionRequest(BaseModel):
+    question: str = Field(
+        ...,
+        min_length=1,
+        description="User question",
+    )
+
+
+class QuestionResponse(BaseModel):
+    answer: str

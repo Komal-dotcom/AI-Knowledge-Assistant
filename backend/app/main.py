@@ -10,6 +10,9 @@ from backend.app.core.exceptions import (
     DocumentValidationError,
     PdfExtractionError,
 )
+from backend.app.api.routes.chat import (
+    router as chat_router,
+)
 
 
 @asynccontextmanager
@@ -28,7 +31,7 @@ app = FastAPI(
 )
 
 app.include_router(documents_router)
-
+app.include_router(chat_router)
 
 @app.exception_handler(DocumentValidationError)
 async def document_validation_exception_handler(
