@@ -42,3 +42,12 @@ class ChunkedDocument:
     document_id: str
     filename: str
     chunks: list[DocumentChunk]
+
+@dataclass(frozen=True)
+class RetrievalResult:
+    chunk_id: str
+    document_id: str
+    filename: str
+    page_number: int
+    text: str
+    similarity_score: float
