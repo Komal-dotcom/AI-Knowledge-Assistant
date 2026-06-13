@@ -26,3 +26,19 @@ class ExtractedDocument:
             for page in self.pages
             if page.text
         )
+
+@dataclass(frozen=True)
+class DocumentChunk:
+    chunk_id: str
+    document_id: str
+    filename: str
+    page_number: int
+    text: str
+    char_count: int
+
+
+@dataclass(frozen=True)
+class ChunkedDocument:
+    document_id: str
+    filename: str
+    chunks: list[DocumentChunk]
