@@ -1,6 +1,11 @@
 from fastapi import APIRouter, Depends, File, UploadFile, status
 
-from backend.app.api.dependencies import get_document_service, get_extraction_service
+from backend.app.api.dependencies import (
+    get_document_service,
+    get_extraction_service,
+    get_indexing_service,
+)
+from backend.app.services.indexing_service import IndexingService
 from backend.app.models.schemas import ExtractDocumentResponse, UploadDocumentResponse
 from backend.app.services.document_service import DocumentService
 from backend.app.services.extraction_service import ExtractionService
@@ -17,8 +22,10 @@ router = APIRouter(tags=["Documents"])
 async def upload_document(
     file: UploadFile = File(..., description="PDF file to upload"),
     document_service: DocumentService = Depends(get_document_service),
+    indexing_service: IndexingService = Depends(get_indexing_service),
 ) -> UploadDocumentResponse:
     saved = await document_service.upload_document(file)
+    indexing_service.index_document(saved.document_id)
 
     return UploadDocumentResponse(
         status="success",
