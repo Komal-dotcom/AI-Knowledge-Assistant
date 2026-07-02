@@ -41,3 +41,12 @@ class QuestionRequest(BaseModel):
 
 class QuestionResponse(BaseModel):
     answer: str
+
+class DocumentSummaryResponse(BaseModel):
+    filename: str
+    size_bytes: int
+    uploaded_at: datetime
+
+
+class ListDocumentsResponse(BaseModel):
+    documents: list[DocumentSummaryResponse]

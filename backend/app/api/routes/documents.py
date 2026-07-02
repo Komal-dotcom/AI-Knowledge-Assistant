@@ -6,7 +6,12 @@ from backend.app.api.dependencies import (
     get_indexing_service,
 )
 from backend.app.services.indexing_service import IndexingService
-from backend.app.models.schemas import ExtractDocumentResponse, UploadDocumentResponse
+from backend.app.models.schemas import (
+    ExtractDocumentResponse,
+    UploadDocumentResponse,
+    DocumentSummaryResponse,
+    ListDocumentsResponse,
+)
 from backend.app.services.document_service import DocumentService
 from backend.app.services.extraction_service import ExtractionService
 
@@ -63,4 +68,26 @@ async def extract_document_text(
         ],
         full_text=extracted.full_text,
         message="Text extracted successfully.",
+    )
+
+@router.get(
+    "/documents",
+    response_model=ListDocumentsResponse,
+    summary="List uploaded documents",
+)
+async def list_documents(
+    document_service: DocumentService = Depends(get_document_service),
+) -> ListDocumentsResponse:
+
+    documents = document_service.list_documents()
+
+    return ListDocumentsResponse(
+        documents=[
+            DocumentSummaryResponse(
+                filename=document.filename,
+                size_bytes=document.size_bytes,
+                uploaded_at=document.uploaded_at,
+            )
+            for document in documents
+        ]
     )

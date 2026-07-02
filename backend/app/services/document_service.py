@@ -80,3 +80,37 @@ class DocumentService:
             file_path=file_path,
             uploaded_at=datetime.fromtimestamp(stat.st_ctime, tz=UTC),
         )
+
+    def list_documents(self) -> list[SavedDocument]:
+        documents: list[SavedDocument] = []
+
+        for document_dir in self._settings.upload_dir.iterdir():
+            if not document_dir.is_dir():
+                continue
+
+            pdf_files = list(document_dir.glob("*.pdf"))
+            if not pdf_files:
+                continue
+
+            file_path = pdf_files[0]
+            stat = file_path.stat()
+
+            documents.append(
+                SavedDocument(
+                    document_id=document_dir.name,
+                    filename=pdf_files[0].name,
+                    size_bytes=stat.st_size,
+                    file_path=file_path,
+                    uploaded_at=datetime.fromtimestamp(
+                        stat.st_ctime,
+                        tz=UTC,
+                    ),
+                )
+            )
+
+        documents.sort(
+            key=lambda doc: doc.uploaded_at,
+            reverse=True,
+        )
+
+        return documents
