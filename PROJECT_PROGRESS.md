@@ -1,423 +1,291 @@
-# AI Knowledge Assistant (RAG) - Project Progress
+# AI Knowledge Assistant - Project Progress
 
 ## Project Overview
 
-AI Knowledge Assistant is a Retrieval-Augmented Generation (RAG) application that allows users to upload PDF documents, index their contents into a vector database, and ask natural language questions grounded in those documents.
-
-The application is built using FastAPI, ChromaDB, Sentence Transformers, and Google Gemini.
+A Retrieval-Augmented Generation (RAG) based AI Knowledge Assistant that allows users to upload PDF documents and ask natural language questions about them using Google's Gemini API and ChromaDB vector search.
 
 ---
 
-# Tech Stack
+# Technology Stack
 
-## Backend
+### Backend
+- Python 3.13
+- FastAPI
+- Uvicorn
 
-* Python 3.12+
-* FastAPI
+### AI & NLP
+- Google Gemini API
+- Sentence Transformers
+- all-MiniLM-L6-v2
 
-## AI / ML
+### Vector Database
+- ChromaDB
 
-* Sentence Transformers
-* all-MiniLM-L6-v2
-* Google Gemini
+### PDF Processing
+- PyMuPDF (fitz)
 
-## Vector Database
-
-* ChromaDB
-
-## PDF Processing
-
-* PyMuPDF
-
-## Testing
-
-* Pytest
+### Testing
+- Pytest
 
 ---
 
-# Project Architecture
+# Completed Phases
 
-Current pipeline:
-
-User Uploads PDF
-↓
-Document Upload API
-↓
-PDF Extraction
-↓
-Text Cleaning
-↓
-Text Chunking
-↓
-Embedding Generation
-↓
-Store Embeddings in ChromaDB
-↓
-Semantic Retrieval
-↓
-Gemini
-↓
-Grounded Answer
-
----
-
-# Completed Features
-
-## Phase 1 — Project Setup ✅
+## ✅ Phase 1 – Project Setup
 
 Completed:
+- Project structure
+- FastAPI application
+- Configuration
+- Exception handling
+- Testing setup
 
-* FastAPI project structure
-* Virtual environment
-* Configuration management
-* Environment variables
-* Basic routing
-* Health endpoint
-* Git repository
-* GitHub repository
-
-Status:
-Complete
+Status: COMPLETE
 
 ---
 
-## Phase 2 — PDF Upload ✅
+## ✅ Phase 2 – PDF Upload
 
 Completed:
+- Secure PDF upload
+- File validation
+- Upload size limits
+- UUID based storage
+- Upload endpoint
 
-* Upload PDF endpoint
-* File validation
-* Upload directory
-* Metadata generation
-* Unique document IDs
-
-Endpoint:
-
-POST /upload-document
-
-Status:
-Complete
+Status: COMPLETE
 
 ---
 
-## Phase 3 — PDF Extraction ✅
+## ✅ Phase 3 – PDF Extraction
 
 Completed:
+- PDF text extraction
+- Text cleaning
+- Domain models
+- Extraction API
+- Unit tests
 
-* PyMuPDF integration
-* Page-wise extraction
-* Text cleaning
-* Domain models
-* Extraction service
-* Extraction endpoint
-
-Endpoint:
-
-GET /document/{document_id}/extract
-
-Status:
-Complete
+Status: COMPLETE
 
 ---
 
-## Phase 4 — Text Chunking ✅
+## ✅ Phase 4 – Document Chunking
 
 Completed:
+- Chunking pipeline
+- Chunking service
+- Domain models for chunks
+- Chunk generation
 
-* Chunking pipeline
-* Chunk overlap
-* Chunking service
-* Domain models
-
-Result:
-
-PDF
-↓
-
-Multiple text chunks
-
-Status:
-Complete
+Status: COMPLETE
 
 ---
 
-## Phase 5 — Embeddings & Vector Storage ✅
+## ✅ Phase 5 – Embeddings & Vector Database
 
 Completed:
+- Sentence Transformer integration
+- Embedding generation
+- ChromaDB integration
+- Vector storage
+- Embedding tests
 
-* Sentence Transformer embeddings
-* all-MiniLM-L6-v2 model
-* ChromaDB integration
-* Persistent vector storage
-* Indexing service
-* Embedding service
-* Vector store service
-
-Verified:
-
-✔ Embeddings generated
-
-✔ Chunks stored in ChromaDB
-
-Status:
-Complete
+Status: COMPLETE
 
 ---
 
-## Phase 6 — Semantic Retrieval ✅
+## ✅ Phase 6 – Semantic Retrieval
 
 Completed:
+- Similarity search
+- Retrieval service
+- Context generation
+- Top-k retrieval
 
-* Query embeddings
-* Similarity search
-* Top-K retrieval
-* Retrieval service
-
-Verified:
-
-Questions retrieve relevant chunks.
-
-Status:
-Complete
+Status: COMPLETE
 
 ---
 
-## Phase 7 — RAG Answer Generation ✅
+## ✅ Phase 7 – RAG Question Answering
 
 Completed:
+- Gemini integration
+- Prompt engineering
+- LLM service
+- RAG service
+- Chat endpoint
+- End-to-end testing
 
-* Google Gemini API
-* Environment configuration
-* LLM service
-* RAG service
-* Prompt engineering
-* Question Answering API
-
-Endpoint:
-
-POST /chat/ask
-
-Verified:
-
-Question
-↓
-
-Retrieve Chunks
-↓
-
-Gemini
-↓
-
-Grounded Answer
-
-Status:
-Complete
+Status: COMPLETE
 
 ---
 
-## Phase 8 — Backend UX Improvement (Partially Complete) 🚧
+## ✅ Phase 8 – Backend Improvements (In Progress)
+
+### Completed
+
+#### Automatic Indexing
+- Automatic extraction after upload
+- Automatic chunking
+- Automatic embeddings
+- Automatic ChromaDB indexing
+
+Status: COMPLETE
+
+---
+
+### Document Listing
+
+Added:
+
+GET /documents
+
+Features:
+- Lists uploaded PDFs
+- Returns filename
+- Returns upload date
+- Returns file size
+- Documents sorted by newest first
+
+Status: COMPLETE
+
+---
+
+### Document Management
 
 Completed:
+- Added document listing service
+- Added document summary response models
+- Added delete response schema
+- Added vector store delete functionality
+- Added document delete service
+- Added DELETE endpoint
+- Fixed list_documents() implementation
+- Fixed Python indentation issues
+- Tested and committed changes
 
-Automatic indexing after upload.
+Status: PARTIALLY COMPLETE
 
-Current upload flow:
-
-Upload PDF
-↓
-
-Automatically extract
-
-↓
-
-Chunk
-
-↓
-
-Generate embeddings
-
-↓
-
-Store in ChromaDB
-
-↓
-
-Ready for questions
-
-This removed the need for manually running the indexing pipeline after every upload.
-
-Status:
-Partially Complete
+Remaining:
+- Verify ChromaDB deletion
+- Verify filesystem deletion
+- Verify RAG no longer retrieves deleted documents
+- Improve delete error handling
 
 ---
 
 # Current API Endpoints
 
-Health
+## Health
 
 GET /health
 
-Documents
+---
+
+## Documents
 
 POST /upload-document
 
 GET /document/{document_id}/extract
 
-Chat
+GET /documents
+
+DELETE /documents/{document_id}
+
+---
+
+## Chat
 
 POST /chat/ask
 
 ---
 
-# Verified Functionality
+# Current Project Status
 
-✔ Upload PDF
+Backend Progress:
+███████████████████░░░ 75%
 
-✔ Extract text
-
-✔ Chunk document
-
-✔ Generate embeddings
-
-✔ Store vectors
-
-✔ Retrieve relevant chunks
-
-✔ Generate Gemini answer
-
-✔ Ask questions through FastAPI endpoint
-
-✔ Automatic indexing after upload
-
----
-
-# Current Limitations
-
-Users still need to use Swagger UI.
-
-Document IDs are still exposed to users.
-
-Separate extract endpoint still exists (kept intentionally for debugging).
-
-No frontend yet.
-
-No document list endpoint.
-
-No source citations in responses.
-
-No conversation history.
-
-No Docker deployment.
-
-No cloud deployment.
+Overall Project:
+████████████████░░░░░░ 65%
 
 ---
 
 # Remaining Roadmap
 
-## Phase 8.2
-
-* Return better upload response
-* Hide document IDs from users
-* Add GET /documents endpoint
-* Show uploaded document names
-
----
+## Phase 8
+- Finish Delete Document
+- Improve Upload Response
+- Improve Error Handling
 
 ## Phase 9
-
 Frontend
-
-Recommended:
-
-* Streamlit
-
-Features:
-
-* Upload PDF
-* Ask questions
-* Display answers
-* Show sources
-* Upload history
-
----
+- Upload UI
+- Documents List
+- Delete Button
+- Chat Interface
+- Sources Display
 
 ## Phase 10
-
-Improve Answer Quality
-
-* Source citations
-* Confidence threshold
-* Better prompt engineering
-* Hallucination reduction
-
----
+RAG Improvements
+- Better Prompt
+- Better Retrieval
+- Better Context
+- Source Attribution
 
 ## Phase 11
-
-Production Readiness
-
-* Logging
-* Better exception handling
-* API validation improvements
-* Unit tests
-* Integration tests
-* Performance improvements
-
----
+Production Improvements
+- Logging
+- Cleanup
+- Configuration
+- Testing
 
 ## Phase 12
+Docker
 
+## Phase 13
 Deployment
 
-* Docker
-* Docker Compose
-* Render / Railway / Azure / AWS deployment
+## Phase 14
+GitHub Polish
+- README
+- Architecture Diagram
+- Screenshots
+- Demo GIF
+- API Documentation
+
+## Phase 15
+Documentation & Interview Preparation
+
+Topics:
+- File-by-file explanation
+- Complete backend architecture
+- FastAPI
+- ChromaDB
+- RAG pipeline
+- Dependency Injection
+- Vector Search
+- Gemini Integration
+- Interview Questions
+- Viva Questions
 
 ---
 
-# Git Commit Strategy
+# Git History
 
-One feature = One commit.
+Latest Completed Features
 
-Workflow:
+✓ Automatic Indexing
 
-Implement feature
+✓ Document Listing Endpoint
 
-↓
-
-Test feature
-
-↓
-
-Commit
-
-↓
-
-Push
-
-↓
-
-Update PROJECT_PROGRESS.md
-
----
-
-# Resume Summary
-
-AI Knowledge Assistant (RAG)
-
-Built an end-to-end Retrieval-Augmented Generation (RAG) application using FastAPI, ChromaDB, Sentence Transformers, and Google Gemini.
-
-Implemented PDF ingestion, text extraction, semantic chunking, vector embeddings, similarity search, and grounded question answering over uploaded documents through a REST API.
+✓ Delete Document (Initial Implementation)
 
 ---
 
 Last Updated
 
+Date:
+July 2026
 Current Phase:
-
-Phase 8.1 Complete
-
-Next Task:
-
-Phase 8.2 – Improve upload workflow and remove document IDs from the user experience.
+Phase 8 – Backend Improvements
