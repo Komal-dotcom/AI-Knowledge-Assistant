@@ -5,6 +5,10 @@ from backend.app.api.dependencies import (
     get_extraction_service,
     get_indexing_service,
 )
+from backend.app.api.dependencies import get_vector_store_service
+from backend.app.models.schemas import DeleteDocumentResponse
+from backend.app.services.vector_store_service import VectorStoreService
+
 from backend.app.services.indexing_service import IndexingService
 from backend.app.models.schemas import (
     ExtractDocumentResponse,
@@ -84,10 +88,30 @@ async def list_documents(
     return ListDocumentsResponse(
         documents=[
             DocumentSummaryResponse(
+                document_id=document.document_id,
                 filename=document.filename,
                 size_bytes=document.size_bytes,
                 uploaded_at=document.uploaded_at,
             )
             for document in documents
         ]
+    )
+@router.delete(
+    "/documents/{document_id}",
+    response_model=DeleteDocumentResponse,
+    summary="Delete a document",
+)
+async def delete_document(
+    document_id: str,
+    document_service: DocumentService = Depends(get_document_service),
+    vector_store_service: VectorStoreService = Depends(get_vector_store_service),
+) -> DeleteDocumentResponse:
+
+    vector_store_service.delete_document(document_id)
+
+    document_service.delete_document(document_id)
+
+    return DeleteDocumentResponse(
+        status="success",
+        message="Document deleted successfully.",
     )

@@ -47,3 +47,14 @@ class VectorStoreService:
                 }
             ],
         )
+
+    def delete_document(
+        self,
+        document_id: str,
+    ) -> None:
+
+        self.collection.delete(
+            where={
+                "document_id": document_id
+            }
+        )

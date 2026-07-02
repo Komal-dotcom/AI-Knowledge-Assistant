@@ -43,6 +43,7 @@ class QuestionResponse(BaseModel):
     answer: str
 
 class DocumentSummaryResponse(BaseModel):
+    document_id: str
     filename: str
     size_bytes: int
     uploaded_at: datetime
@@ -50,3 +51,7 @@ class DocumentSummaryResponse(BaseModel):
 
 class ListDocumentsResponse(BaseModel):
     documents: list[DocumentSummaryResponse]
+
+class DeleteDocumentResponse(BaseModel):
+    status: str
+    message: str 

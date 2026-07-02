@@ -1,3 +1,4 @@
+import shutil
 from dataclasses import dataclass
 from datetime import UTC, datetime
 from pathlib import Path
@@ -6,7 +7,10 @@ from uuid import UUID, uuid4
 from fastapi import UploadFile
 
 from backend.app.config import Settings, settings
-from backend.app.core.exceptions import DocumentNotFoundError, DocumentValidationError
+from backend.app.core.exceptions import (
+    DocumentNotFoundError,
+    DocumentValidationError,
+)
 from backend.app.core.security import (
     read_upload_with_size_limit,
     sanitize_filename,
@@ -98,7 +102,7 @@ class DocumentService:
             documents.append(
                 SavedDocument(
                     document_id=document_dir.name,
-                    filename=pdf_files[0].name,
+                    filename=file_path.name,
                     size_bytes=stat.st_size,
                     file_path=file_path,
                     uploaded_at=datetime.fromtimestamp(
@@ -114,3 +118,14 @@ class DocumentService:
         )
 
         return documents
+
+    def delete_document(
+        self,
+        document_id: str,
+    ) -> None:
+        # Validate that the document exists
+        self.get_document_by_id(document_id)
+
+        document_dir = self._settings.upload_dir / document_id
+
+        shutil.rmtree(document_dir)
