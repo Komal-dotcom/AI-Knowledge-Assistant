@@ -24,8 +24,12 @@ async def lifespan(app: FastAPI):
 
 app = FastAPI(
     title=settings.app_name,
-    description="RAG-based document question answering system.",
-    version="0.1.0",
+    description="""
+AI Knowledge Assistant
+
+A Retrieval-Augmented Generation (RAG) application that allows users to upload PDF documents, automatically index them into ChromaDB, and ask natural language questions grounded in the uploaded content using Google's Gemini model.
+""",
+    version="1.0.0",
     lifespan=lifespan,
     debug=settings.debug,
 )
@@ -40,7 +44,10 @@ async def document_validation_exception_handler(
 ) -> JSONResponse:
     return JSONResponse(
         status_code=exc.status_code,
-        content={"detail": exc.message},
+        content={
+            "status": "error",
+            "detail": exc.message,
+        },
     )
 
 
@@ -51,7 +58,10 @@ async def document_not_found_exception_handler(
 ) -> JSONResponse:
     return JSONResponse(
         status_code=exc.status_code,
-        content={"detail": exc.message},
+        content={
+            "status": "error",
+            "detail": exc.message,
+        },
     )
 
 
@@ -62,7 +72,10 @@ async def pdf_extraction_exception_handler(
 ) -> JSONResponse:
     return JSONResponse(
         status_code=exc.status_code,
-        content={"detail": exc.message},
+        content={
+            "status": "error",
+            "detail": exc.message,
+        },
     )
 
 

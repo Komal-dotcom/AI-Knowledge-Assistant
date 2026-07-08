@@ -23,10 +23,11 @@ router = APIRouter(tags=["Documents"])
 
 
 @router.post(
-    "/upload-document",
+    "/documents",
     response_model=UploadDocumentResponse,
     status_code=status.HTTP_201_CREATED,
     summary="Upload a PDF document",
+    description="Uploads a PDF, automatically extracts text, generates embeddings, indexes it into ChromaDB, and makes it immediately available for question answering.",
 )
 async def upload_document(
     file: UploadFile = File(..., description="PDF file to upload"),
@@ -42,14 +43,16 @@ async def upload_document(
         filename=saved.filename,
         size_bytes=saved.size_bytes,
         uploaded_at=saved.uploaded_at,
-        message="Document uploaded successfully.",
+        ready_for_questions=True,
+        message="Document uploaded and indexed successfully.",
     )
 
 
 @router.get(
     "/document/{document_id}/extract",
     response_model=ExtractDocumentResponse,
-    summary="Extract text from an uploaded PDF",
+    summary="Extract text from a PDF",
+    description="Extracts cleaned text from every page of an uploaded PDF document.",
 )
 async def extract_document_text(
     document_id: str,
@@ -78,6 +81,7 @@ async def extract_document_text(
     "/documents",
     response_model=ListDocumentsResponse,
     summary="List uploaded documents",
+    description="Returns all uploaded PDF documents ordered by upload time (newest first).",
 )
 async def list_documents(
     document_service: DocumentService = Depends(get_document_service),
@@ -100,6 +104,7 @@ async def list_documents(
     "/documents/{document_id}",
     response_model=DeleteDocumentResponse,
     summary="Delete a document",
+    description="Deletes the uploaded PDF and removes all associated embeddings from ChromaDB.",
 )
 async def delete_document(
     document_id: str,

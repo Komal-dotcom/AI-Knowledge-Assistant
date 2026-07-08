@@ -185,107 +185,150 @@ GET /health
 
 ## Documents
 
-POST /upload-document
-
-GET /document/{document_id}/extract
+POST /documents
 
 GET /documents
 
 DELETE /documents/{document_id}
+
+GET /document/{document_id}/extract
 
 ---
 
 ## Chat
 
 POST /chat/ask
-
----
-
 # Current Project Status
 
 Backend Progress:
-███████████████████░░░ 75%
+█████████████████████████ 100%
+
+Frontend Progress:
+
+░░░░░░░░░░░░░░░░░░░░░░░ 0%
 
 Overall Project:
-████████████████░░░░░░ 65%
-
----
+██████████████████░░░░░ 80%
 
 # Remaining Roadmap
 
-## Phase 8
-- Finish Delete Document
-- Improve Upload Response
-- Improve Error Handling
-
 ## Phase 9
 Frontend
-- Upload UI
-- Documents List
-- Delete Button
-- Chat Interface
-- Sources Display
+- Streamlit setup
+- Upload interface
+- Documents list
+- Delete document
+- Chat interface
+- Display answers
+- Display source pages
+- Better UI/UX
 
 ## Phase 10
 RAG Improvements
-- Better Prompt
-- Better Retrieval
-- Better Context
-- Source Attribution
+- Better prompt engineering
+- Source citations
+- Confidence threshold
+- Better retrieval ranking
 
 ## Phase 11
 Production Improvements
 - Logging
-- Cleanup
-- Configuration
 - Testing
+- Configuration cleanup
+- Performance improvements
 
 ## Phase 12
-Docker
+Docker & Deployment
+- Docker
+- Docker Compose
+- Deploy application
 
 ## Phase 13
-Deployment
-
-## Phase 14
 GitHub Polish
 - README
-- Architecture Diagram
 - Screenshots
+- Architecture diagram
 - Demo GIF
-- API Documentation
+- API documentation
 
-## Phase 15
+## Phase 14
 Documentation & Interview Preparation
-
-Topics:
-- File-by-file explanation
-- Complete backend architecture
-- FastAPI
-- ChromaDB
-- RAG pipeline
-- Dependency Injection
-- Vector Search
-- Gemini Integration
-- Interview Questions
-- Viva Questions
-
----
+- Explain every file
+- Backend architecture
+- Complete RAG workflow
+- Interview questions
+- Viva questions
 
 # Git History
 
-Latest Completed Features
+# Latest Completed Features
 
-✓ Automatic Indexing
+✓ Automatic document indexing
 
-✓ Document Listing Endpoint
+✓ Document listing endpoint
 
-✓ Delete Document (Initial Implementation)
+✓ Document deletion
+
+✓ Improved upload response
+
+✓ Standardized API error responses
+
+✓ Swagger documentation improvements
+
+✓ RESTful API endpoint naming
+
+
+Current Phase:
+## ✅ Phase 8 – Backend Improvements
+
+### Automatic Indexing
+
+Completed:
+- Automatic extraction after upload
+- Automatic chunking
+- Automatic embedding generation
+- Automatic indexing into ChromaDB
+
+Status: COMPLETE
 
 ---
 
-Last Updated
+### Document Management
+
+Completed:
+- List uploaded documents
+- Delete uploaded documents
+- Delete document embeddings from ChromaDB
+- Delete uploaded document folder
+- Document summary response models
+- Delete response schema
+- Improved upload response
+- Consistent API error responses
+- Improved Swagger documentation
+- RESTful endpoint naming
+
+Current Endpoints:
+
+POST /documents
+
+GET /documents
+
+DELETE /documents/{document_id}
+
+GET /document/{document_id}/extract
+
+Status: COMPLETE
+
+# Last Updated
 
 Date:
 July 2026
+
 Current Phase:
-Phase 8 – Backend Improvements
+Phase 9 – Frontend Development
+
+Backend Status:
+Complete ✅
+
+Next Milestone:
+Build the Streamlit frontend for document management and AI chat.

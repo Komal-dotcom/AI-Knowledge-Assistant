@@ -4,11 +4,12 @@ from pydantic import BaseModel, Field
 
 
 class UploadDocumentResponse(BaseModel):
-    status: str = Field(..., examples=["success"])
+    status: str
     document_id: str
     filename: str
     size_bytes: int
     uploaded_at: datetime
+    ready_for_questions: bool
     message: str
 
 
@@ -29,6 +30,7 @@ class ExtractDocumentResponse(BaseModel):
 
 
 class ErrorResponse(BaseModel):
+    status: str = "error"
     detail: str
 
 class QuestionRequest(BaseModel):
