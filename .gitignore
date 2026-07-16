@@ -31,6 +31,40 @@ vector_db/*
 *.swp
 *.swo
 
+
 # OS
 .DS_Store
 Thumbs.db
+
+# Python
+__pycache__/
+*.py[cod]
+*.pyo
+
+# Virtual Environment
+.venv/
+venv/
+
+# Environment Variables
+.env
+
+# Streamlit
+.streamlit/
+
+# IDE
+.vscode/
+.idea/
+
+# Test cache
+.pytest_cache/
+
+# Runtime data
+uploads/
+vector_db/
+
+# Logs
+*.log
+
+# OS files
+Thumbs.db
+.DS_Store

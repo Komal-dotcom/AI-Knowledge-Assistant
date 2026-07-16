@@ -204,11 +204,10 @@ Backend Progress:
 █████████████████████████ 100%
 
 Frontend Progress:
-
-░░░░░░░░░░░░░░░░░░░░░░░ 0%
+██████░░░░░░░░░░░░░░░░░ 25%
 
 Overall Project:
-██████████████████░░░░░ 80%
+████████████████████░░░ 85%
 
 # Remaining Roadmap
 
@@ -325,10 +324,29 @@ Date:
 July 2026
 
 Current Phase:
-Phase 9 – Frontend Development
+## 🚧 Phase 9 – Frontend Development (In Progress)
+
+### Completed
+
+- Created frontend project structure
+- Installed Streamlit
+- Connected Streamlit with FastAPI backend
+- Created API communication layer
+- Built upload component
+- Connected upload button to backend
+- Successfully uploaded documents from the frontend
+- Displayed uploaded documents using backend API
+
+Status: IN PROGRESS
+
+Remaining:
+- Replace JSON with document cards
+- Delete documents from frontend
+- Chat interface
+- Display AI answers
+- Display source pages
+- Improve UI/UX
 
 Backend Status:
 Complete ✅
 
-Next Milestone:
-Build the Streamlit frontend for document management and AI chat.
