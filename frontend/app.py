@@ -1,4 +1,5 @@
 import streamlit as st
+from components.documents import documents_section
 
 from api import (
     get_documents,
@@ -8,11 +9,11 @@ from components.upload import upload_section
 
 st.set_page_config(
     page_title="AI Knowledge Assistant",
-    page_icon="📚",
+    page_icon="",
     layout="wide",
 )
 
-st.title("📚 AI Knowledge Assistant")
+st.title(" AI Knowledge Assistant")
 
 uploaded_file, upload_button = upload_section()
 
@@ -28,12 +29,12 @@ if uploaded_file and upload_button:
 
 st.divider()
 
-st.subheader("📚 Uploaded Documents")
-
 try:
+
     documents = get_documents()
 
-    st.json(documents)
+    documents_section(documents)
 
 except Exception as e:
+
     st.error(str(e))

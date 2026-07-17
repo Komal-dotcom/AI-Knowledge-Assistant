@@ -29,3 +29,13 @@ def upload_document(file):
     response.raise_for_status()
 
     return response.json()
+
+def delete_document(document_id):
+
+    response = requests.delete(
+        f"{BACKEND_URL}/documents/{document_id}"
+    )
+
+    response.raise_for_status()
+
+    return response.json()
