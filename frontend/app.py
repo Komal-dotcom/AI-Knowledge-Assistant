@@ -8,7 +8,7 @@ from api import (
 
 from components.upload import upload_section
 from components.documents import documents_section
-from components.chat import chat_section
+from components.chat import chat_input_section
 
 
 # -------------------- Page Config --------------------
@@ -20,12 +20,17 @@ st.set_page_config(
     initial_sidebar_state="collapsed",
 )
 
+# -------------------- Session State --------------------
+
+if "messages" not in st.session_state:
+    st.session_state.messages = []
 
 # -------------------- Sidebar --------------------
 
 with st.sidebar:
 
     st.title("Documents")
+    
 
     try:
         documents = get_documents()
@@ -55,32 +60,49 @@ if uploaded_file and upload_button:
 # -------------------- Main Page --------------------
 
 st.title("AI Knowledge Assistant")
+st.caption("Ask questions about your uploaded documents.")
 
-question, ask_button = chat_section()
+st.divider()
 
+# Display chat history
+for message in st.session_state.messages:
 
-# -------------------- Chat Logic --------------------
+    with st.chat_message(message["role"]):
+        st.markdown(message["content"])
 
-if ask_button:
+question = chat_input_section()
 
-    if not question.strip():
+if question:
 
-        st.warning("Please enter a question.")
+    # Display user's message
+    st.session_state.messages.append(
+        {
+            "role": "user",
+            "content": question,
+        }
+    )
 
-    else:
+    with st.chat_message("user"):
+        st.markdown(question)
 
-        try:
+    try:
 
-            with st.spinner("Thinking..."):
+        with st.spinner("Thinking..."):
 
-                response = ask_question(question)
+            response = ask_question(question)
 
-            st.divider()
+        answer = response["answer"]
 
-            st.subheader("Answer")
+        st.session_state.messages.append(
+            {
+                "role": "assistant",
+                "content": answer,
+            }
+        )
 
-            st.write(response["answer"])
+        with st.chat_message("assistant"):
+            st.markdown(answer)
 
-        except Exception as e:
+    except Exception as e:
 
-            st.error(str(e))
+        st.error(str(e))
