@@ -5,11 +5,18 @@ from api import (
     upload_document,
     ask_question,
 )
-
+from pathlib import Path
 from components.upload import upload_section
 from components.documents import documents_section
 from components.chat import chat_input_section
 
+css_path = Path(__file__).parent / "assets" / "style.css"
+
+with open(css_path) as f:
+    st.markdown(
+        f"<style>{f.read()}</style>",
+        unsafe_allow_html=True,
+    )
 
 # -------------------- Page Config --------------------
 
@@ -27,21 +34,26 @@ if "messages" not in st.session_state:
 
 # -------------------- Sidebar --------------------
 
+documents = []
 with st.sidebar:
 
-    st.title("Documents")
-    
+    st.title("📂 Documents")
 
+    # Upload Section
+    uploaded_file, upload_button = upload_section()
+
+    st.divider()
+
+    # Documents Section
     try:
         documents = get_documents()
+
+        st.caption(f"{len(documents)} document(s) uploaded")
+
         documents_section(documents)
 
     except Exception as e:
         st.error(str(e))
-
-    st.divider()
-
-    uploaded_file, upload_button = upload_section()
 
 
 # -------------------- Upload Logic --------------------
@@ -59,10 +71,35 @@ if uploaded_file and upload_button:
 
 # -------------------- Main Page --------------------
 
-st.title("AI Knowledge Assistant")
-st.caption("Ask questions about your uploaded documents.")
+col1, col2 = st.columns([6, 1])
+
+with col1:
+    st.title("AI Knowledge Assistant")
+    st.caption("Ask questions about your uploaded documents.")
+
+with col2:
+    st.write("")  # Align button vertically
+
+    if st.button("🗑 Clear"):
+        st.session_state.messages = []
+        st.rerun()
 
 st.divider()
+# Welcome message
+if not st.session_state.messages:
+    st.subheader("Welcome to AI Knowledge Assistant")
+
+    st.markdown(
+    """
+    Upload one or more PDF documents using the sidebar.
+
+    Try asking
+
+    - Summarize this document
+    - What are the key concepts?
+    - Explain this topic in simple terms etc.
+    """
+    )
 
 # Display chat history
 for message in st.session_state.messages:
@@ -70,7 +107,14 @@ for message in st.session_state.messages:
     with st.chat_message(message["role"]):
         st.markdown(message["content"])
 
-question = chat_input_section()
+if documents:
+    question = chat_input_section()
+else:
+    question = None
+
+    st.warning(
+        "Upload at least one document to start chatting."
+    )
 
 if question:
 

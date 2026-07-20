@@ -1,0 +1,19 @@
+/* Paragraphs */
+p {
+    color: #B0B0B0 !important;
+}
+
+/* Markdown text */
+div[data-testid="stMarkdownContainer"] {
+    color: #B0B0B0;
+}
+
+/* Lists */
+li {
+    color: #B0B0B0;
+}
+
+/* Hide the link icon beside headings */
+.stHeading a {
+    display: none !important;
+}
